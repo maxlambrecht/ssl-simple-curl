@@ -1,0 +1,39 @@
+group 'spiffe.example'
+version '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: "com.github.johnrengelman.shadow"
+
+assemble.dependsOn shadowJar
+
+shadowJar {
+    classifier = null
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'spiffe.example.Main'
+    }
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.apache.httpcomponents:httpclient:4.5.6"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
